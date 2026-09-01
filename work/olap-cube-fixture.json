@@ -1,0 +1,396 @@
+{
+  "schemaVersion": 1,
+  "datasetId": "northstar-retail-v1",
+  "currency": "INR",
+  "loadMetadata": {
+    "loadedAt": "2026-04-30T06:00:00Z",
+    "dataThrough": "2026-04-30"
+  },
+  "dimensions": {
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April"
+    ],
+    "regions": [
+      "North",
+      "South",
+      "West"
+    ],
+    "categories": [
+      "Apparel",
+      "Home"
+    ]
+  },
+  "totals": {
+    "rawOrders": 6,
+    "rawOrderLines": 11,
+    "completedFacts": 10,
+    "completedUnits": 14,
+    "grossSales": 21150,
+    "discounts": 1350,
+    "netSales": 19800,
+    "excludedCancelledSales": 6000
+  },
+  "cells": [
+    {
+      "month": "January",
+      "region": "North",
+      "category": "Apparel",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "January",
+      "region": "North",
+      "category": "Home",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "January",
+      "region": "South",
+      "category": "Apparel",
+      "state": "observed",
+      "netSales": 900
+    },
+    {
+      "month": "January",
+      "region": "South",
+      "category": "Home",
+      "state": "observed",
+      "netSales": 1200
+    },
+    {
+      "month": "January",
+      "region": "West",
+      "category": "Apparel",
+      "state": "observed",
+      "netSales": 1600
+    },
+    {
+      "month": "January",
+      "region": "West",
+      "category": "Home",
+      "state": "observed",
+      "netSales": 2700
+    },
+    {
+      "month": "February",
+      "region": "North",
+      "category": "Apparel",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "February",
+      "region": "North",
+      "category": "Home",
+      "state": "observed",
+      "netSales": 6600
+    },
+    {
+      "month": "February",
+      "region": "South",
+      "category": "Apparel",
+      "state": "observed",
+      "netSales": 3300
+    },
+    {
+      "month": "February",
+      "region": "South",
+      "category": "Home",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "February",
+      "region": "West",
+      "category": "Apparel",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "February",
+      "region": "West",
+      "category": "Home",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "March",
+      "region": "North",
+      "category": "Apparel",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "March",
+      "region": "North",
+      "category": "Home",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "March",
+      "region": "South",
+      "category": "Apparel",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "March",
+      "region": "South",
+      "category": "Home",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "March",
+      "region": "West",
+      "category": "Apparel",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "March",
+      "region": "West",
+      "category": "Home",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "April",
+      "region": "North",
+      "category": "Apparel",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "April",
+      "region": "North",
+      "category": "Home",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "April",
+      "region": "South",
+      "category": "Apparel",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "April",
+      "region": "South",
+      "category": "Home",
+      "state": "missing",
+      "netSales": null
+    },
+    {
+      "month": "April",
+      "region": "West",
+      "category": "Apparel",
+      "state": "observed",
+      "netSales": 500
+    },
+    {
+      "month": "April",
+      "region": "West",
+      "category": "Home",
+      "state": "observed",
+      "netSales": 3000
+    }
+  ],
+  "operations": {
+    "sliceFebruary": [
+      {
+        "region": "North",
+        "category": "Home",
+        "netSales": 6600
+      },
+      {
+        "region": "South",
+        "category": "Apparel",
+        "netSales": 3300
+      }
+    ],
+    "diceJanFebSouthWestApparel": [
+      {
+        "month": "January",
+        "region": "South",
+        "netSales": 900
+      },
+      {
+        "month": "January",
+        "region": "West",
+        "netSales": 1600
+      },
+      {
+        "month": "February",
+        "region": "South",
+        "netSales": 3300
+      }
+    ],
+    "rollupByMonth": [
+      {
+        "month": "January",
+        "state": "observed",
+        "netSales": 6400
+      },
+      {
+        "month": "February",
+        "state": "observed",
+        "netSales": 9900
+      },
+      {
+        "month": "March",
+        "state": "missing",
+        "netSales": null
+      },
+      {
+        "month": "April",
+        "state": "observed",
+        "netSales": 3500
+      }
+    ],
+    "rollupByQuarter": [
+      {
+        "year": 2026,
+        "quarter": "Q1",
+        "netSales": 16300
+      },
+      {
+        "year": 2026,
+        "quarter": "Q2 through April",
+        "netSales": 3500
+      }
+    ],
+    "q1ByRegion": [
+      {
+        "region": "North",
+        "netSales": 6600
+      },
+      {
+        "region": "South",
+        "netSales": 5400
+      },
+      {
+        "region": "West",
+        "netSales": 4300
+      }
+    ],
+    "q1ByCategory": [
+      {
+        "category": "Apparel",
+        "netSales": 5800
+      },
+      {
+        "category": "Home",
+        "netSales": 10500
+      }
+    ],
+    "pivotMonthRegion": [
+      {
+        "month": "January",
+        "region": "South",
+        "apparel": 900,
+        "home": 1200,
+        "total": 2100
+      },
+      {
+        "month": "January",
+        "region": "West",
+        "apparel": 1600,
+        "home": 2700,
+        "total": 4300
+      },
+      {
+        "month": "February",
+        "region": "North",
+        "apparel": null,
+        "home": 6600,
+        "total": 6600
+      },
+      {
+        "month": "February",
+        "region": "South",
+        "apparel": 3300,
+        "home": null,
+        "total": 3300
+      },
+      {
+        "month": "April",
+        "region": "West",
+        "apparel": 500,
+        "home": 3000,
+        "total": 3500
+      }
+    ],
+    "drillThroughFebruaryNorthHome": {
+      "coordinate": {
+        "month": "February",
+        "region": "North",
+        "category": "Home"
+      },
+      "aggregateNetSales": 6600,
+      "facts": [
+        {
+          "orderId": 1004,
+          "lineNo": 1,
+          "date": "2026-02-14",
+          "product": "Kettle",
+          "quantity": 2,
+          "gross": 3600,
+          "discount": 0,
+          "net": 3600
+        },
+        {
+          "orderId": 1004,
+          "lineNo": 2,
+          "date": "2026-02-14",
+          "product": "Lamp",
+          "quantity": 1,
+          "gross": 3250,
+          "discount": 250,
+          "net": 3000
+        }
+      ]
+    },
+    "fullCubeGroupingPatterns": [
+      [
+        "month",
+        "region",
+        "category"
+      ],
+      [
+        "month",
+        "region"
+      ],
+      [
+        "month",
+        "category"
+      ],
+      [
+        "region",
+        "category"
+      ],
+      [
+        "month"
+      ],
+      [
+        "region"
+      ],
+      [
+        "category"
+      ],
+      []
+    ]
+  },
+  "displayRules": {
+    "missingCell": "—",
+    "measuredZero": "₹0",
+    "note": "A missing cell has no matching fact and must never be silently converted into a measured zero."
+  }
+}

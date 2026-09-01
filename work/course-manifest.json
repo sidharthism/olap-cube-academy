@@ -1,0 +1,1040 @@
+{
+  "schemaVersion": 1,
+  "courseId": "decision-room-olap",
+  "title": "The Decision Room",
+  "subtitle": "Learn OLAP cubes by solving a retail reporting mystery",
+  "chapterCount": 17,
+  "numbering": {
+    "startsAt": 1,
+    "endsAt": 17
+  },
+  "audience": "Beginners learning OLAP and dimensional analytics",
+  "learningLoop": [
+    "Briefing",
+    "Explore",
+    "Build",
+    "Test",
+    "Debrief"
+  ],
+  "dataset": {
+    "id": "northstar-retail-v1",
+    "name": "Northstar Retail",
+    "currency": "INR",
+    "loadedAt": "2026-04-30T06:00:00Z",
+    "dataThrough": "2026-04-30",
+    "rawCustomers": 3,
+    "rawProducts": 4,
+    "rawStores": 3,
+    "rawOrders": 6,
+    "rawOrderLines": 11,
+    "completedFacts": 10,
+    "completedUnits": 14,
+    "grossSales": 21150,
+    "discounts": 1350,
+    "netSales": 19800,
+    "excludedOrder": {
+      "orderId": 1006,
+      "status": "cancelled",
+      "netAmount": 6000
+    }
+  },
+  "progress": {
+    "storageKey": "decision-room-olap-progress-v2",
+    "xpPerChapter": 100,
+    "masteryPercent": 80,
+    "retriesUnlimited": true,
+    "chaptersFreelyAccessible": true,
+    "masteryRule": "Complete the chapter activity and score at least 80 percent on its quiz; retries are unlimited."
+  },
+  "chapters": [
+    {
+      "number": 1,
+      "slug": "enter-the-decision-room",
+      "title": "Enter the Decision Room",
+      "phase": "Find the evidence",
+      "objective": "Understand why OLTP and OLAP solve different problems.",
+      "story": "Three Northstar reports disagree. Mira asks you to identify which questions belong to transaction systems and which belong to analytical systems.",
+      "concepts": [
+        "OLTP records individual business events.",
+        "OLAP compares and summarizes many events.",
+        "A cube may have more than three dimensions."
+      ],
+      "interaction": {
+        "type": "question-sorter",
+        "instruction": "Answer all six questions by sorting each one into Run the business now or Understand the business over time.",
+        "completion": "Answer all six questions correctly."
+      },
+      "debrief": "OLTP captures events; OLAP turns many events into comparable evidence.",
+      "quiz": [
+        {
+          "id": "1-1",
+          "question": "Which system is optimized for recording one order?",
+          "options": [
+            "OLAP",
+            "OLTP",
+            "Dashboard",
+            "Cube"
+          ],
+          "correctIndex": 1,
+          "explanation": "OLTP handles small, frequent transaction writes."
+        },
+        {
+          "id": "1-2",
+          "question": "Which system is optimized for comparing years and regions?",
+          "options": [
+            "OLAP",
+            "OLTP",
+            "Order entry",
+            "Address editor"
+          ],
+          "correctIndex": 0,
+          "explanation": "OLAP scans and summarizes many records."
+        },
+        {
+          "id": "1-3",
+          "question": "An OLAP cube must always have exactly three dimensions.",
+          "options": [
+            "True",
+            "False"
+          ],
+          "correctIndex": 1,
+          "explanation": "The cube drawing is a mental model; real analytical models can have many dimensions."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "slug": "read-the-raw-evidence",
+      "title": "Read the Raw Evidence",
+      "phase": "Find the evidence",
+      "objective": "Follow keys across raw customers, products, stores, orders, and order lines.",
+      "story": "Mira gives you the source tables and warns that an order header is not the same thing as a sold item.",
+      "concepts": [
+        "A primary key identifies one row.",
+        "A foreign key connects related rows.",
+        "Order headers and order lines have different grains."
+      ],
+      "interaction": {
+        "type": "linked-table-explorer",
+        "instruction": "Select an order and follow its customer, store, and product lines.",
+        "completion": "Trace order 1002 and inspect cancelled order 1006."
+      },
+      "debrief": "Before aggregating, follow the keys and understand what one row means.",
+      "quiz": [
+        {
+          "id": "2-1",
+          "question": "Where is product quantity stored?",
+          "options": [
+            "Customers",
+            "Stores",
+            "Order lines",
+            "Order header only"
+          ],
+          "correctIndex": 2,
+          "explanation": "Each order-line row records a product and its quantity."
+        },
+        {
+          "id": "2-2",
+          "question": "Why can one order appear on several order-line rows?",
+          "options": [
+            "It has several products",
+            "The key is broken",
+            "Every row is a month",
+            "It is already a cube"
+          ],
+          "correctIndex": 0,
+          "explanation": "One order can contain multiple products."
+        },
+        {
+          "id": "2-3",
+          "question": "Should cancelled order 1006 count toward completed net sales?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctIndex": 1,
+          "explanation": "Its source status is cancelled, so it must be excluded from completed facts."
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "slug": "define-one-fact",
+      "title": "Define One Fact",
+      "phase": "Find the evidence",
+      "objective": "Declare the fact grain before selecting measures.",
+      "story": "An early report repeats order totals on every line and counts sales twice.",
+      "concepts": [
+        "Grain states exactly what one fact row means.",
+        "The chosen grain is one product line on one completed order.",
+        "Mixing grains creates duplication."
+      ],
+      "interaction": {
+        "type": "grain-simulator",
+        "instruction": "Inspect the order, order-line, and product-per-day grain choices, then choose one completed order line.",
+        "completion": "Choose one completed order line and pass the UNIQUE(order_id, line_no) duplication check."
+      },
+      "debrief": "Grain is the contract that keeps every number honest.",
+      "quiz": [
+        {
+          "id": "3-1",
+          "question": "What should be decided before selecting measures?",
+          "options": [
+            "Chart color",
+            "Grain",
+            "Font size",
+            "Cache duration"
+          ],
+          "correctIndex": 1,
+          "explanation": "Measures must match the exact meaning of one row."
+        },
+        {
+          "id": "3-2",
+          "question": "Can an order total be repeated on every line and safely summed?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctIndex": 1,
+          "explanation": "Repeating a header total at line grain causes double-counting."
+        },
+        {
+          "id": "3-3",
+          "question": "What does one practice fact row describe?",
+          "options": [
+            "One month",
+            "One region",
+            "One completed order line",
+            "One customer lifetime"
+          ],
+          "correctIndex": 2,
+          "explanation": "The declared grain is one product line on one completed order."
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "slug": "build-the-star",
+      "title": "Build the Star",
+      "phase": "Build the model",
+      "objective": "Arrange facts and dimensions into a simple star schema.",
+      "story": "The operational tables work for order entry but make repeated analysis difficult.",
+      "concepts": [
+        "The fact table stores measurable events.",
+        "Dimensions describe facts.",
+        "A star schema surrounds one central fact table with dimensions."
+      ],
+      "interaction": {
+        "type": "star-builder",
+        "instruction": "Place each field in Fact Sales or the correct dimension, then connect every fact key to its dimension.",
+        "completion": "Place all eight fields correctly and connect all four fact keys."
+      },
+      "debrief": "The star makes common analytical joins predictable.",
+      "quiz": [
+        {
+          "id": "4-1",
+          "question": "Where does net_amount belong?",
+          "options": [
+            "dim_product",
+            "fact_sales",
+            "dim_store",
+            "dim_date"
+          ],
+          "correctIndex": 1,
+          "explanation": "Net amount measures each sales fact."
+        },
+        {
+          "id": "4-2",
+          "question": "Where does category belong?",
+          "options": [
+            "dim_product",
+            "fact_sales only",
+            "dim_date",
+            "dim_customer"
+          ],
+          "correctIndex": 0,
+          "explanation": "Category describes a product."
+        },
+        {
+          "id": "4-3",
+          "question": "Why is it called a star schema?",
+          "options": [
+            "It stores astronomy data",
+            "Dimensions surround a central fact table",
+            "Every table is identical",
+            "It has five points only"
+          ],
+          "correctIndex": 1,
+          "explanation": "Its common diagram resembles a star."
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "slug": "describe-the-business",
+      "title": "Describe the Business",
+      "phase": "Build the model",
+      "objective": "Use dimensions, members, levels, attributes, and hierarchies correctly.",
+      "story": "The star has tables, but the team needs shared words for navigating them.",
+      "concepts": [
+        "A dimension is an analysis angle.",
+        "A member is one value in a dimension.",
+        "A hierarchy orders levels from broad to detailed."
+      ],
+      "interaction": {
+        "type": "hierarchy-ladder",
+        "instruction": "Choose the valid Time and Store ladders from detailed members toward the All member.",
+        "completion": "Complete Day → Month → Quarter → Year → All and Store → Region → All."
+      },
+      "debrief": "Dimensions provide coordinates; hierarchies provide routes between detail levels.",
+      "quiz": [
+        {
+          "id": "5-1",
+          "question": "In Year → Quarter → Month, what is Quarter?",
+          "options": [
+            "Measure",
+            "Level",
+            "Fact",
+            "Engine"
+          ],
+          "correctIndex": 1,
+          "explanation": "Quarter is one level in the Time hierarchy."
+        },
+        {
+          "id": "5-2",
+          "question": "In the Store dimension, what is South?",
+          "options": [
+            "Member",
+            "Measure",
+            "Fact table",
+            "Query plan"
+          ],
+          "correctIndex": 0,
+          "explanation": "South is one member value."
+        },
+        {
+          "id": "5-3",
+          "question": "What enables consistent roll-up and drill-down?",
+          "options": [
+            "Hierarchy",
+            "Discount",
+            "Primary color",
+            "Cache only"
+          ],
+          "correctIndex": 0,
+          "explanation": "A hierarchy defines the ordered levels."
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "slug": "choose-measures-carefully",
+      "title": "Choose Measures Carefully",
+      "phase": "Build the model",
+      "objective": "Know when a measure can be summed and when it must be recalculated.",
+      "story": "A dashboard adds percentages and produces a number that has no useful meaning.",
+      "concepts": [
+        "Additive measures sum across dimensions.",
+        "Semi-additive measures have limits, often across time.",
+        "Ratios should usually be recalculated from aggregated components."
+      ],
+      "interaction": {
+        "type": "measure-gates",
+        "instruction": "Classify all seven measures as Safe to sum, Recalculate from parts, or Do not sum across time.",
+        "completion": "Classify all seven measures correctly."
+      },
+      "debrief": "The aggregation rule is part of a measure's definition.",
+      "quiz": [
+        {
+          "id": "6-1",
+          "question": "Is net sales additive in this dataset?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctIndex": 0,
+          "explanation": "Net sales can be summed across the displayed dimensions."
+        },
+        {
+          "id": "6-2",
+          "question": "Should monthly margin percentages be added to get a quarter margin?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctIndex": 1,
+          "explanation": "Percentages are non-additive."
+        },
+        {
+          "id": "6-3",
+          "question": "How should quarter average selling price be found?",
+          "options": [
+            "Add monthly averages",
+            "Aggregate sales and units, then divide",
+            "Use the largest month",
+            "Count categories"
+          ],
+          "correctIndex": 1,
+          "explanation": "Recomputing from components preserves weighting."
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "slug": "create-the-first-cube",
+      "title": "Create the First Cube",
+      "phase": "Build the model",
+      "objective": "Read a Month × Region × Category cube and inspect its cells.",
+      "story": "You turn completed facts into a view leaders can explore by business coordinates.",
+      "concepts": [
+        "A cell is identified by one member from each displayed dimension.",
+        "The cell stores an aggregated measure.",
+        "Missing does not automatically mean zero."
+      ],
+      "interaction": {
+        "type": "cube-explorer",
+        "instruction": "Choose Month, Region, and Category coordinates and inspect the contributing facts.",
+        "completion": "Find three populated cells and one missing cell."
+      },
+      "debrief": "A cube navigates grouped facts using business coordinates.",
+      "quiz": [
+        {
+          "id": "7-1",
+          "question": "What is the measure in the practice cube?",
+          "options": [
+            "Region",
+            "Month",
+            "Net sales",
+            "Category"
+          ],
+          "correctIndex": 2,
+          "explanation": "Net sales is aggregated in each cell."
+        },
+        {
+          "id": "7-2",
+          "question": "What identifies one cube cell?",
+          "options": [
+            "One dimension only",
+            "One member from every displayed dimension",
+            "A random row",
+            "A chart color"
+          ],
+          "correctIndex": 1,
+          "explanation": "The member combination forms the coordinate."
+        },
+        {
+          "id": "7-3",
+          "question": "Does a blank March cell prove sales were zero?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctIndex": 1,
+          "explanation": "It may mean no matching fact was recorded."
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "slug": "ask-with-sql",
+      "title": "Ask with SQL",
+      "phase": "Navigate the cube",
+      "objective": "Connect joins, filters, grouping, and aggregation to the visual cube.",
+      "story": "Mira asks for a reproducible query behind every displayed answer.",
+      "concepts": [
+        "JOIN attaches dimension descriptions.",
+        "WHERE filters rows before aggregation.",
+        "GROUP BY defines result groups and SUM computes the measure."
+      ],
+      "interaction": {
+        "type": "sql-builder",
+        "instruction": "Arrange SELECT, FROM and JOIN, WHERE, GROUP BY, HAVING, and ORDER BY blocks.",
+        "completion": "Build and run the Month × Region × Category query."
+      },
+      "debrief": "SQL makes the cube's grouping logic visible and repeatable.",
+      "quiz": [
+        {
+          "id": "8-1",
+          "question": "Which clause creates Month × Region × Category groups?",
+          "options": [
+            "WHERE",
+            "GROUP BY",
+            "ORDER BY",
+            "LIMIT"
+          ],
+          "correctIndex": 1,
+          "explanation": "GROUP BY defines each result group."
+        },
+        {
+          "id": "8-2",
+          "question": "Which clause removes rows before aggregation?",
+          "options": [
+            "WHERE",
+            "HAVING",
+            "ORDER BY",
+            "SELECT alias"
+          ],
+          "correctIndex": 0,
+          "explanation": "WHERE filters source rows."
+        },
+        {
+          "id": "8-3",
+          "question": "Which clause can keep only groups above ₹2,000?",
+          "options": [
+            "WHERE",
+            "HAVING",
+            "JOIN",
+            "FROM"
+          ],
+          "correctIndex": 1,
+          "explanation": "HAVING filters after grouping."
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "slug": "slice-and-dice",
+      "title": "Slice and Dice",
+      "phase": "Navigate the cube",
+      "objective": "Focus a cube with one-member and multi-member filters.",
+      "story": "A manager first asks for February only, then for a small comparison across several dimensions.",
+      "concepts": [
+        "Slice fixes one dimension to one member.",
+        "Dice chooses ranges or sets across multiple dimensions.",
+        "Active filters should remain visible."
+      ],
+      "interaction": {
+        "type": "filter-lab",
+        "instruction": "Create the February slice and then the Jan/Feb, South/West, Apparel dice.",
+        "completion": "Match both expected result sets."
+      },
+      "debrief": "Slice focuses one coordinate; dice selects a smaller multidimensional region.",
+      "quiz": [
+        {
+          "id": "9-1",
+          "question": "Only February is which operation?",
+          "options": [
+            "Slice",
+            "Dice",
+            "Pivot",
+            "Drill-through"
+          ],
+          "correctIndex": 0,
+          "explanation": "It fixes the Time dimension to one member."
+        },
+        {
+          "id": "9-2",
+          "question": "Jan or Feb, South or West, Apparel only is which operation?",
+          "options": [
+            "Slice",
+            "Dice",
+            "Roll-up",
+            "Pivot"
+          ],
+          "correctIndex": 1,
+          "explanation": "It selects sets across several dimensions."
+        },
+        {
+          "id": "9-3",
+          "question": "Does dice require a literal three-dimensional cube?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctIndex": 1,
+          "explanation": "The operation applies to multidimensional analysis with any practical number of dimensions."
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "slug": "roll-up-and-drill-down",
+      "title": "Roll Up and Drill Down",
+      "phase": "Navigate the cube",
+      "objective": "Move between summary and detail levels without losing reconciliation.",
+      "story": "Leadership begins with Q1 and asks which months created the result.",
+      "concepts": [
+        "Roll-up moves to a broader hierarchy level.",
+        "Drill-down moves to a more detailed level.",
+        "Totals should reconcile for additive measures."
+      ],
+      "interaction": {
+        "type": "hierarchy-elevator",
+        "instruction": "Move between Day, Month, Quarter, and Year while watching facts combine or separate.",
+        "completion": "Visit all four levels, then complete Month → Quarter → Month while observing January, February, and the missing March member roll into Q1."
+      },
+      "debrief": "Roll-up changes the level of detail; drill-down reveals contributors.",
+      "quiz": [
+        {
+          "id": "10-1",
+          "question": "Month → Quarter is what?",
+          "options": [
+            "Roll-up",
+            "Drill-down",
+            "Pivot",
+            "Slice"
+          ],
+          "correctIndex": 0,
+          "explanation": "Quarter is the broader level."
+        },
+        {
+          "id": "10-2",
+          "question": "Quarter → Month is what?",
+          "options": [
+            "Roll-up",
+            "Drill-down",
+            "Dice",
+            "Drill-through"
+          ],
+          "correctIndex": 1,
+          "explanation": "Month is the more detailed level."
+        },
+        {
+          "id": "10-3",
+          "question": "Should Q1 equal its displayed months for net sales?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctIndex": 0,
+          "explanation": "Net sales is additive here, so the levels must reconcile."
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "slug": "pivot-and-drill-through",
+      "title": "Pivot and Drill Through",
+      "phase": "Navigate the cube",
+      "objective": "Rotate a result and open the fact evidence behind one cell.",
+      "story": "One manager wants regions in columns while Finance wants to inspect the source lines.",
+      "concepts": [
+        "Pivot changes presentation, not facts.",
+        "Drill-through opens detailed fact records.",
+        "Drill-through differs from moving down a hierarchy."
+      ],
+      "interaction": {
+        "type": "pivot-drillthrough",
+        "instruction": "Swap rows and columns, then open February × North × Home.",
+        "completion": "Verify that the rotated total is unchanged and the two fact rows sum to ₹6,600."
+      },
+      "debrief": "Pivot changes viewpoint; drill-through exposes evidence.",
+      "quiz": [
+        {
+          "id": "11-1",
+          "question": "Does pivot change net sales?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctIndex": 1,
+          "explanation": "It only rotates how the same result is displayed."
+        },
+        {
+          "id": "11-2",
+          "question": "What opens the fact rows behind ₹6,600?",
+          "options": [
+            "Roll-up",
+            "Drill-through",
+            "Slice",
+            "Pivot"
+          ],
+          "correctIndex": 1,
+          "explanation": "Drill-through reveals the underlying records."
+        },
+        {
+          "id": "11-3",
+          "question": "Is drill-through the same as Month → Day?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctIndex": 1,
+          "explanation": "Month to Day is hierarchy drill-down; drill-through opens source facts."
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "slug": "ask-for-every-subtotal",
+      "title": "Ask for Every Subtotal",
+      "phase": "Navigate the cube",
+      "objective": "Understand CUBE, ROLLUP, GROUPING SETS, and subtotal labels.",
+      "story": "The executive table needs detail rows, several subtotals, and a grand total together.",
+      "concepts": [
+        "CUBE creates every grouping combination.",
+        "ROLLUP follows hierarchical prefixes.",
+        "GROUPING SETS explicitly lists desired groupings."
+      ],
+      "interaction": {
+        "type": "grouping-set-generator",
+        "instruction": "Generate the three-dimension CUBE, classify all eight grouping patterns, and compare CUBE, ROLLUP, and GROUPING SETS.",
+        "completion": "Classify all eight patterns correctly and visit all three subtotal operators."
+      },
+      "debrief": "SQL cube operators coordinate detail, subtotal, and grand-total views.",
+      "quiz": [
+        {
+          "id": "12-1",
+          "question": "How many grouping patterns can a full CUBE create for three dimensions?",
+          "options": [
+            "3",
+            "6",
+            "8",
+            "9"
+          ],
+          "correctIndex": 2,
+          "explanation": "Each dimension is either included or rolled up, so there are 2³ patterns."
+        },
+        {
+          "id": "12-2",
+          "question": "Which construct explicitly names only wanted combinations?",
+          "options": [
+            "WHERE",
+            "GROUPING SETS",
+            "ORDER BY",
+            "LIMIT"
+          ],
+          "correctIndex": 1,
+          "explanation": "GROUPING SETS lists the exact groupings."
+        },
+        {
+          "id": "12-3",
+          "question": "Why label subtotal NULL values?",
+          "options": [
+            "To make them larger",
+            "To distinguish all members from missing data",
+            "To sort randomly",
+            "To remove totals"
+          ],
+          "correctIndex": 1,
+          "explanation": "Subtotal markers and genuine missing values must not be confused."
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "slug": "avoid-analytical-traps",
+      "title": "Avoid Analytical Traps",
+      "phase": "Protect the answer",
+      "objective": "Diagnose joins, filters, ratios, and missing-value errors.",
+      "story": "You review four reports that look reasonable but give wrong answers.",
+      "concepts": [
+        "Fan-out joins duplicate facts.",
+        "No row is not automatically zero.",
+        "Ratios should be recomputed at the requested level."
+      ],
+      "interaction": {
+        "type": "error-clinic",
+        "instruction": "Inspect each symptom and its stated cause, then choose the repair that removes the error.",
+        "completion": "Choose the correct repair for all four analytical-error cases."
+      },
+      "debrief": "A fast wrong cube is still wrong; correctness starts with data meaning.",
+      "quiz": [
+        {
+          "id": "13-1",
+          "question": "What proves a dimension join is safe?",
+          "options": [
+            "A colorful chart",
+            "One valid matching dimension row per fact key version",
+            "More rows afterward",
+            "A larger total"
+          ],
+          "correctIndex": 1,
+          "explanation": "A non-unique match can duplicate each fact."
+        },
+        {
+          "id": "13-2",
+          "question": "Is no row automatically equal to zero?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctIndex": 1,
+          "explanation": "Missing observation and measured zero are different claims."
+        },
+        {
+          "id": "13-3",
+          "question": "Why is average of averages risky?",
+          "options": [
+            "It ignores different group sizes",
+            "It uses SQL",
+            "It creates dimensions",
+            "It always returns zero"
+          ],
+          "correctIndex": 0,
+          "explanation": "Groups with different weights should not count equally."
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "slug": "choose-an-olap-engine",
+      "title": "Choose an OLAP Engine",
+      "phase": "Protect the answer",
+      "objective": "Compare ROLAP, MOLAP, and HOLAP trade-offs.",
+      "story": "Northstar must choose where detailed facts and aggregates should live.",
+      "concepts": [
+        "ROLAP analyzes relational facts with SQL.",
+        "MOLAP emphasizes precomputed multidimensional structures.",
+        "HOLAP combines relational detail and multidimensional aggregates."
+      ],
+      "interaction": {
+        "type": "engine-simulator",
+        "instruction": "Try all three scenario presets and observe how size, freshness, speed, and detail needs change the suggested engine family.",
+        "completion": "Try all three presets and observe the ROLAP, MOLAP, and HOLAP recommendations."
+      },
+      "debrief": "Engine choice balances freshness, scale, speed, storage, and detail access.",
+      "quiz": [
+        {
+          "id": "14-1",
+          "question": "Which approach keeps detailed facts mainly in relational tables?",
+          "options": [
+            "ROLAP",
+            "MOLAP",
+            "HOLAP only",
+            "OLTP"
+          ],
+          "correctIndex": 0,
+          "explanation": "ROLAP uses relational storage and SQL."
+        },
+        {
+          "id": "14-2",
+          "question": "Which approach emphasizes precomputed multidimensional storage?",
+          "options": [
+            "ROLAP",
+            "MOLAP",
+            "CSV",
+            "Order entry"
+          ],
+          "correctIndex": 1,
+          "explanation": "MOLAP processes data into multidimensional structures."
+        },
+        {
+          "id": "14-3",
+          "question": "Which approach combines relational detail and multidimensional aggregates?",
+          "options": [
+            "ROLAP",
+            "MOLAP",
+            "HOLAP",
+            "OLTP"
+          ],
+          "correctIndex": 2,
+          "explanation": "HOLAP is the hybrid approach."
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "slug": "make-it-fast-and-trustworthy",
+      "title": "Make It Fast and Trustworthy",
+      "phase": "Protect the answer",
+      "objective": "Apply performance techniques and data-quality checks.",
+      "story": "The result is correct, but the query is slow and the daily refresh sometimes arrives late.",
+      "concepts": [
+        "Partitioning and columnar storage reduce work.",
+        "Precomputed aggregates speed repeated questions.",
+        "Quality checks protect grain, keys, freshness, and reconciliation.",
+        "The deterministic lab freshness time is 2026-04-30 06:00 UTC."
+      ],
+      "interaction": {
+        "type": "quality-control-room",
+        "instruction": "Apply one performance control and run all Northstar data checks.",
+        "completion": "Reach green status for fact count, keys, balance, totals, and freshness."
+      },
+      "debrief": "Performance earns attention; quality earns trust.",
+      "quiz": [
+        {
+          "id": "15-1",
+          "question": "What reduces scanning when queries filter by date?",
+          "options": [
+            "Date partitioning",
+            "Adding more dimensions",
+            "Repeating totals",
+            "Removing keys"
+          ],
+          "correctIndex": 0,
+          "explanation": "Partition pruning avoids unrelated dates."
+        },
+        {
+          "id": "15-2",
+          "question": "What keeps net sales defined once for every dashboard?",
+          "options": [
+            "Random query copies",
+            "A governed metric or semantic layer",
+            "A screenshot",
+            "A pivot only"
+          ],
+          "correctIndex": 1,
+          "explanation": "A shared definition prevents metric drift."
+        },
+        {
+          "id": "15-3",
+          "question": "What should happen if a checksum fails?",
+          "options": [
+            "Publish anyway",
+            "Stop or quarantine the refresh and investigate",
+            "Replace missing with zero",
+            "Delete the check"
+          ],
+          "correctIndex": 1,
+          "explanation": "Bad data should not silently reach users."
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "slug": "leadership-review",
+      "title": "Leadership Review",
+      "phase": "Prove the decision",
+      "objective": "Build a traceable Decision Brief from model choices, SQL, and evidence.",
+      "story": "You must settle the disagreement and present one defensible conclusion to Northstar leadership.",
+      "concepts": [
+        "Every claim needs a clear metric and filter.",
+        "Aggregate totals must reconcile.",
+        "Drill-through and SQL connect the answer to evidence."
+      ],
+      "interaction": {
+        "type": "decision-brief-builder",
+        "instruction": "Choose a defensible claim, reproducible query, drill-through evidence, coverage caveat, and recommendation.",
+        "completion": "Select the correct five cards to produce and save the complete Decision Brief."
+      },
+      "debrief": "A trustworthy answer connects business meaning, model design, calculation, and source evidence.",
+      "quiz": [
+        {
+          "id": "16-1",
+          "question": "Which design decision protects every later total?",
+          "options": [
+            "Fact grain",
+            "Chart color",
+            "Column order",
+            "Animation speed"
+          ],
+          "correctIndex": 0,
+          "explanation": "Grain defines what is safe to count and sum."
+        },
+        {
+          "id": "16-2",
+          "question": "Which operation produced the Q1 summary from months?",
+          "options": [
+            "Roll-up",
+            "Slice",
+            "Pivot",
+            "Drill-through"
+          ],
+          "correctIndex": 0,
+          "explanation": "Month to Quarter is a roll-up."
+        },
+        {
+          "id": "16-3",
+          "question": "What proves where one aggregate came from?",
+          "options": [
+            "A title",
+            "Drill-through and reproducible SQL",
+            "A larger font",
+            "A blank cell"
+          ],
+          "correctIndex": 1,
+          "explanation": "The detailed facts and query provide traceable evidence."
+        },
+        {
+          "id": "16-4",
+          "question": "What is Northstar's trusted completed net-sales total?",
+          "options": [
+            "₹13,500",
+            "₹19,800",
+            "₹21,150",
+            "₹25,800"
+          ],
+          "correctIndex": 1,
+          "explanation": "₹19,800 is gross ₹21,150 minus discounts ₹1,350, excluding cancelled order 1006."
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "slug": "close-the-case",
+      "title": "Close the Case and Choose the Next Mission",
+      "phase": "Prove the decision",
+      "objective": "Connect the complete OLAP mental model, state the conclusions, and choose a further-learning path.",
+      "story": "Leadership accepts the Decision Brief. Mira asks you to rebuild the idea from memory and choose your next mission.",
+      "concepts": [
+        "Events become declared-grain facts.",
+        "Facts connect to dimensions and hierarchies.",
+        "Defined measures form cube cells that can be navigated and verified."
+      ],
+      "interaction": {
+        "type": "knowledge-map",
+        "instruction": "Arrange the eight-stage OLAP chain, match every operation, and select a next learning path.",
+        "completion": "Complete the map, recap board, and one next-mission checklist."
+      },
+      "debrief": "Trustworthy analysis begins with clear meaning, becomes useful through multidimensional exploration, and stays trustworthy through reproducible evidence.",
+      "nextPaths": [
+        "SQL Analyst",
+        "Dimensional Modeler",
+        "BI and Semantic-Layer Builder",
+        "Data Engineer",
+        "OLAP Performance and Architecture"
+      ],
+      "quiz": [
+        {
+          "id": "17-1",
+          "question": "What must be clear before building aggregates?",
+          "options": [
+            "Fact grain and measure meaning",
+            "Dashboard color",
+            "Presentation order",
+            "Cache size only"
+          ],
+          "correctIndex": 0,
+          "explanation": "Aggregation cannot repair an ambiguous row or metric."
+        },
+        {
+          "id": "17-2",
+          "question": "Which structures describe how a fact can be grouped?",
+          "options": [
+            "Dimensions and hierarchies",
+            "Passwords and logs",
+            "Buttons and cards",
+            "Only raw IDs"
+          ],
+          "correctIndex": 0,
+          "explanation": "Dimensions are analysis angles and hierarchies organize their levels."
+        },
+        {
+          "id": "17-3",
+          "question": "Which operation changes table orientation without changing facts?",
+          "options": [
+            "Pivot",
+            "Roll-up",
+            "Slice",
+            "Drill-through"
+          ],
+          "correctIndex": 0,
+          "explanation": "Pivot rotates presentation."
+        },
+        {
+          "id": "17-4",
+          "question": "What is the strongest way to prove an aggregate?",
+          "options": [
+            "Make it bold",
+            "Reproduce it with SQL and drill through to facts",
+            "Hide empty cells",
+            "Use more dimensions"
+          ],
+          "correctIndex": 1,
+          "explanation": "Reproducible calculation plus source evidence makes the result traceable."
+        },
+        {
+          "id": "17-5",
+          "question": "Every OLAP system uses the same physical storage.",
+          "options": [
+            "True",
+            "False"
+          ],
+          "correctIndex": 1,
+          "explanation": "The concepts apply across different relational, multidimensional, hybrid, and modern architectures."
+        }
+      ]
+    }
+  ]
+}

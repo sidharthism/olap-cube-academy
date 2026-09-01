@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "targets": {
+    "chapter-7-cube-explorer": {
+      "targetKind": "new-ui",
+      "projectId": "6b321027-04de-4e51-b591-4860d22513d5",
+      "activeDraftId": "2abdcbab-2a4b-4158-9d63-f69accdacc98",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "app/globals.css",
+        "app/layout.tsx",
+        "../work/superdesign-product-brief.md"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "a107fdf041762b52b92172108aa9ede5b03a6d8d5fd7fea029f7ce94603d4865",
+        "app/globals.css": "d36174d63c58cf369f27b75a369ad33f39914d3d5b24cdf3b5d966179e3511b3",
+        "app/layout.tsx": "069562d3bed5150a20764115b8e043ea46460b35f4bc22cf909a82417d41f341",
+        "../work/superdesign-product-brief.md": "f8a2cb69ebc1d57cb1904404aeb350f73f1d1833f1723ce067a02779701dfeff"
+      },
+      "components": [],
+      "drafts": {
+        "2abdcbab-2a4b-4158-9d63-f69accdacc98": {
+          "title": "Decision Room - Cube Sketch",
+          "visualDirection": "Excalidraw-inspired analyst whiteboard",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-08-28T12:29:02Z"
+    },
+    "course-prologue": {
+      "targetKind": "new-ui",
+      "projectId": "6b321027-04de-4e51-b591-4860d22513d5",
+      "activeDraftId": "8c502307-6f9f-41b6-8814-b3bdf9ca059b",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "app/globals.css:1:205",
+        "app/globals.css:589:635",
+        "app/globals.css:2520:2710",
+        "app/layout.tsx",
+        "../work/superdesign-product-brief.md"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "a107fdf041762b52b92172108aa9ede5b03a6d8d5fd7fea029f7ce94603d4865",
+        "app/globals.css": "3bf4e2b2519bd9aec995a5a229b30de66189ed0e06e0d34047a727881062e70c",
+        "app/layout.tsx": "add7ebd2567a9e3aa31a07675420e84b9b4beb422ce0e74c3d15f40c1307c829",
+        "../work/superdesign-product-brief.md": "f8a2cb69ebc1d57cb1904404aeb350f73f1d1833f1723ce067a02779701dfeff"
+      },
+      "components": [],
+      "drafts": {
+        "8c502307-6f9f-41b6-8814-b3bdf9ca059b": {
+          "title": "The Decision Room — Prologue",
+          "visualDirection": "Story-led analyst whiteboard onboarding",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-08-31T05:21:36Z"
+    }
+  }
+}
