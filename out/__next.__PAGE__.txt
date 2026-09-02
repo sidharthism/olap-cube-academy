@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
-2:I[3557,["/olap-cube-academy/_next/static/chunks/0ly3u2-u6c-58.js","/olap-cube-academy/_next/static/chunks/12.eh8p1wepok.js"],"ClientPageRoot"]
-3:I[49484,["/olap-cube-academy/_next/static/chunks/0ly3u2-u6c-58.js","/olap-cube-academy/_next/static/chunks/12.eh8p1wepok.js","/olap-cube-academy/_next/static/chunks/02s280vvv0121.js"],"default"]
-6:I[78843,["/olap-cube-academy/_next/static/chunks/0ly3u2-u6c-58.js","/olap-cube-academy/_next/static/chunks/12.eh8p1wepok.js"],"OutletBoundary"]
+2:I[3557,["/olap-cube-academy/_next/static/chunks/0nd.voy.vlz6r.js","/olap-cube-academy/_next/static/chunks/12.eh8p1wepok.js"],"ClientPageRoot"]
+3:I[49484,["/olap-cube-academy/_next/static/chunks/0nd.voy.vlz6r.js","/olap-cube-academy/_next/static/chunks/12.eh8p1wepok.js","/olap-cube-academy/_next/static/chunks/0545ra.8-maib.js","/olap-cube-academy/_next/static/chunks/0epy1~-xf_jfs.js"],"default"]
+6:I[78843,["/olap-cube-academy/_next/static/chunks/0nd.voy.vlz6r.js","/olap-cube-academy/_next/static/chunks/12.eh8p1wepok.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/olap-cube-academy/_next/static/chunks/02s280vvv0121.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"ROLouyQV4HVuGuiXh-zJr"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/olap-cube-academy/_next/static/chunks/0545ra.8-maib.js","async":true}],["$","script","script-1",{"src":"/olap-cube-academy/_next/static/chunks/0epy1~-xf_jfs.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"p3_WsPdRBjwt6JrvmNWYj"}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null

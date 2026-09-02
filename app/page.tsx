@@ -2,13 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { ChapterLab, type DecisionBriefDraft } from './course-labs';
+import { SqlRunner } from './sql-runner';
 import {
   chapterDetails,
   course,
   fullLabSql,
   glossary,
   money,
-  type CourseChapter,
   type QuizQuestion,
 } from './course-data';
 
@@ -370,7 +370,7 @@ export default function Home() {
 
           <section id="test" className="stage-section lesson-section">
             <SectionHeading number="03" eyebrow="SQL + Test" title="Make the answer reproducible" />
-            <SqlLesson chapter={chapter} />
+            <SqlRunner chapter={chapter} />
             <QuizPanel questions={chapter.quiz} mastered={quizMastered.includes(activeChapter)} onMastered={markQuizMastered} draft={quizDrafts[String(activeChapter)]} onDraftChange={(draft) => setQuizDrafts((current) => ({ ...current, [String(activeChapter)]: draft }))} />
           </section>
 
@@ -655,27 +655,6 @@ function DatasetPassport() {
     ['Units', '14'], ['Gross', '₹21,150'], ['Discounts', '₹1,350'], ['Net', '₹19,800'],
   ];
   return <div className="dataset-passport"><div><span className="eyebrow">Dataset passport</span><h3 className="hand-heading">Northstar Retail</h3><p>One small, deterministic dataset follows you through every chapter.</p></div><dl>{metrics.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl><p className="warning-callout">Order 1006 is cancelled. Its ₹6,000 line remains raw evidence but is excluded from fact_sales.</p></div>;
-}
-
-function SqlLesson({ chapter }: { chapter: CourseChapter }) {
-  const detail = chapterDetails[chapter.number];
-  const [copied, setCopied] = useState(false);
-  async function copySql() {
-    try {
-      await navigator.clipboard.writeText(detail.sql);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
-    } catch {
-      setCopied(false);
-    }
-  }
-  return (
-    <div className="sql-lesson">
-      <div className="sql-titlebar"><div><span className="eyebrow">{detail.sqlTitle}</span><strong>SQL for chapter {chapter.number}</strong></div><button type="button" onClick={copySql}>{copied ? 'Copied ✓' : 'Copy SQL'}</button></div>
-      <pre><code>{detail.sql}</code></pre>
-      <div className="sql-actions"><button type="button" className="text-button" onClick={() => downloadFile('northstar-olap-lab.sql', fullLabSql, 'text/sql')}>Download complete raw-tables-to-cube SQL</button><span>SQLite core + clearly marked OLAP extensions</span></div>
-    </div>
-  );
 }
 
 function QuizPanel({ questions, mastered, onMastered, draft, onDraftChange }: { questions: QuizQuestion[]; mastered: boolean; onMastered: () => void; draft?: QuizDraft; onDraftChange: (draft: QuizDraft) => void }) {

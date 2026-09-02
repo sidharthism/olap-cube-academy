@@ -10,7 +10,8 @@ function normalizeBasePath(value: string | undefined) {
 
 const publicBasePath = normalizeBasePath(process.env.NEXT_PUBLIC_BASE_PATH);
 const assetPath = (path: string) => `${publicBasePath}${path}`;
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? `https://sidharthism.github.io${publicBasePath}`).replace(/\/+$/, '');
+const shareUrl = `${siteUrl}/`;
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -23,7 +24,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),
+  metadataBase: new URL(shareUrl),
   title: 'The Decision Room — Learn OLAP Cubes',
   description:
     'A visual, interactive 17-chapter journey from raw retail tables to trustworthy OLAP decisions.',
@@ -40,20 +41,19 @@ export const metadata: Metadata = {
     title: 'The Decision Room — Learn OLAP Cubes',
     description: 'Learn OLAP cubes from raw rows to trusted decisions in 17 interactive chapters.',
     type: 'website',
-    ...(siteUrl ? {
-      images: [{
-        url: assetPath('/og.png'),
-        width: 1731,
-        height: 909,
-        alt: 'The Decision Room with a hand-drawn Month, Region, and Category cube',
-      }],
-    } : {}),
+    url: shareUrl,
+    images: [{
+      url: `${siteUrl}/og.png`,
+      width: 1731,
+      height: 909,
+      alt: 'The Decision Room with a hand-drawn Month, Region, and Category cube',
+    }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'The Decision Room — Learn OLAP Cubes',
     description: 'Learn OLAP cubes from raw rows to trusted decisions in 17 interactive chapters.',
-    ...(siteUrl ? { images: [assetPath('/og.png')] } : {}),
+    images: [`${siteUrl}/og.png`],
   },
 };
 
@@ -63,9 +63,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable}`}
         style={{ '--github-mark-url': `url("${assetPath('/github-mark.svg')}")` } as CSSProperties}
       >
         {children}

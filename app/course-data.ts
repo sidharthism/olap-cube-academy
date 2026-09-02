@@ -1,4 +1,4 @@
-import manifest from '../work/course-manifest.json';
+import manifest from '../work/course-manifest.json' with { type: 'json' };
 
 export type QuizQuestion = {
   id: string;

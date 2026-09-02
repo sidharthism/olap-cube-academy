@@ -1,2 +1,2 @@
-:HL["/olap-cube-academy/_next/static/chunks/10yp0~f0db65l.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"ROLouyQV4HVuGuiXh-zJr"}
+:HL["/olap-cube-academy/_next/static/chunks/0yvywqvu4bn-x.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"p3_WsPdRBjwt6JrvmNWYj"}
