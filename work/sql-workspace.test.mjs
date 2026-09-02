@@ -11,7 +11,7 @@ import {
   friendlySqlError,
   parseSqlStatements,
   selectSqlOption,
-} from '../site/app/sql-workspace.ts';
+} from '../app/sql-workspace.ts';
 
 const chapterOneSql = `-- OLTP: find one event
 SELECT * FROM raw_orders WHERE order_id = 1004;

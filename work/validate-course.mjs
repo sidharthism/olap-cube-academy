@@ -6,8 +6,8 @@ const manifest = JSON.parse(readFileSync(new URL("course-manifest.json", base), 
 const fixture = JSON.parse(readFileSync(new URL("olap-cube-fixture.json", base), "utf8"));
 const specification = readFileSync(new URL("decision-room-course-spec.md", base), "utf8");
 const sql = readFileSync(new URL("olap-retail-lab.sql", base), "utf8");
-const labs = readFileSync(new URL("../site/app/course-labs.tsx", base), "utf8");
-const courseData = readFileSync(new URL("../site/app/course-data.ts", base), "utf8");
+const labs = readFileSync(new URL("../app/course-labs.tsx", base), "utf8");
+const courseData = readFileSync(new URL("../app/course-data.ts", base), "utf8");
 
 const failures = [];
 

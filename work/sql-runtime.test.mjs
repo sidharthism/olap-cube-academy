@@ -6,7 +6,7 @@ import {
   queryWithTimeout,
   tableToResult,
   validateWithDuckDb,
-} from '../site/app/sql-runtime.ts';
+} from '../app/sql-runtime.ts';
 
 function fakeTable(rows, columns = Object.keys(rows[0] ?? {}), numRows = rows.length) {
   return {

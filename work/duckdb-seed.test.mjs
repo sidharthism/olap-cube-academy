@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { duckdbLabSql, getDuckdbBootstrapSql } from '../site/app/duckdb-seed.ts';
-import { parseSqlStatements } from '../site/app/sql-workspace.ts';
+import { duckdbLabSql, getDuckdbBootstrapSql } from '../app/duckdb-seed.ts';
+import { parseSqlStatements } from '../app/sql-workspace.ts';
 
 test('builds a complete, parseable DuckDB seed with browser safeguards', () => {
   const parsed = parseSqlStatements(duckdbLabSql);

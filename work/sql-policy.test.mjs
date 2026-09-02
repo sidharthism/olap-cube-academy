@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { validateLearnerSql } from '../site/app/sql-policy.ts';
+import { validateLearnerSql } from '../app/sql-policy.ts';
 
 test('allows normal analytical queries and sandbox experiments', () => {
   assert.deepEqual(validateLearnerSql([

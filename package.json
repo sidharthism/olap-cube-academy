@@ -10,9 +10,9 @@
     "build": "vinext build",
     "build:static": "STATIC_EXPORT=1 next build",
     "start": "vinext start",
-    "test": "node --experimental-strip-types --test ../work/duckdb-seed.test.mjs ../work/sql-policy.test.mjs ../work/sql-runtime.test.mjs ../work/sql-workspace.test.mjs",
+    "test": "node --experimental-strip-types --test work/duckdb-seed.test.mjs work/sql-policy.test.mjs work/sql-runtime.test.mjs work/sql-workspace.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern out --ignore-pattern public/duckdb",
-    "test:sql-policy": "node --experimental-strip-types --test ../work/sql-policy.test.mjs"
+    "test:sql-policy": "node --experimental-strip-types --test work/sql-policy.test.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "1.32.0",
